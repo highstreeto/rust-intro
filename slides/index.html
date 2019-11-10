@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/monokai.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+
+	<style type="text/css">
+		/* 1. Style header/footer <div> so they are positioned as desired. */
+		#header-left {
+			position: absolute;
+			top: 0%;
+			left: 0%;
+		}
+
+		#header-right {
+			position: absolute;
+			top: 0%;
+			right: 0%;
+		}
+
+		#footer-left {
+			position: absolute;
+			bottom: 0%;
+			left: 0%;
+			margin-left: 0.5rem;
+			margin-bottom: 0.5rem;
+		}
+
+		.footer-text {
+			font-size: 0.5em;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="hidden" style="display:none;">
+		<div id="header">
+			<div id="footer-left" class="footer-text">
+				Author: Martin Hochstrasser
+			</div>
+		</div>
+	</div>
+
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Rust</h1>
+				<p>A safer way to program</p>
+			</section>
+			<section>
+				<h2>Variables</h2>
+				<p>Declare with <code>let</code> or <code>let mut</code></p>
+				<p>Integer and float types have fixed size</p>
+				<pre><code class="rust" data-trim data-line-numbers>
+				let int: i32 = -15;
+				let uint: u32 = 256;
+				let float: f32 = 1.0;
+				let double: f64 = -15.103E3;
+				let b: bool = true;
+				let c: char = "🦀"; // Unicode Scalar Value
+				let i = 15; // type is inferred
+				// these are all immutable
+
+				let mut k = 1;
+				println!("k: {}", k);
+				k += 1;
+				println!("k: {}", k);
+				</code></pre>
+				</code>
+			</section>
+			<section>
+				<section>
+					<h2>Flow control</h2>
+					<p>Everything returns a value</p>
+					<p>
+						<code>if</code>, &nbsp;
+						<code>loop</code>, &nbsp;
+						<code>while</code>, &nbsp;
+						<code>for</code> and <code>match</code>
+					</p>
+				</section>
+				<section>
+					<h3>if</h3>
+					<pre><code class="rust" data-trim data-line-numbers>
+					let input = String::from("Hello World");
+					if input == "Hello World" {
+					  println!("Classic") // Method with ! are macros
+					} else {
+					  println!("Unexpected");
+					}
+					</code></pre>
+				</section>
+				<section>
+					<h3>loop</h3>
+					<pre><code class="rust" data-trim data-line-numbers>
+					let mut counter = 1;
+					let loop_ret = loop {
+					  counter += 1;
+
+					  if counter == 15 {
+					    break counter
+					  }
+					};
+					assert_eq!(loop_ret, 15); // used in unit tests
+
+					let loop_ret = loop {
+					  break
+					};
+					println!("loop_ret: {:?}", loop_ret);
+					</code></pre>
+				</section>
+				<section>
+					<h3>while</h3>
+					<!-- TODO Write about while -->
+				</section>
+				<section>
+					<h3>for</h3>
+					<!-- TODO Write about for -->
+				</section>
+			</section>
+			<section>
+				<h2>Ownership / Borrows</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Type</th>
+							<th>Description</th>
+							<th>Take Ownership?</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>self</td>
+							<td>Whole Value</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>6self</td>
+							<td>Borrow</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>&mut self</td>
+							<td>Mutable Borrow</td>
+							<td>No</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- TODO Short summary of borrows (maybe output of compiler) -->
+			</section>
+			<section>
+				<section>
+					<h2>Types</h2>
+					<p>Arrays, Tuples, Enum and Structs</p>
+					<p>Slices</p>
+				</section>
+				<section>
+					<h3>Tuples and Array</h3>
+					<!-- TODO Describe tuples and arrays -->
+				</section>
+				<section>
+					<h3>Enum</h3>
+					<pre><code class="rust" data-trim data-line-numbers>
+					enum Message {
+					  Skipped,
+					  Ok(u32),
+					  Error { code: u32, msg: String },
+					}
+					</code></pre>
+				</section>
+				<section>
+					<h3>Struct</h3>
+					<!-- TODO Describe struct -->
+				</section>
+				<section>
+					<h3>Methods</h3>
+					<pre><code class="rust" data-trim data-line-numbers>
+impl Message {
+  fn get_error_code(&self) -> Option&lt;&u32&gt; {
+    match self {
+      Message::Ok (_) => None,
+      Message::Skipped => None,
+      Message::Error { code, .. } => Some(code)
+    }
+  }
+}
+					</pre></code>
+				</section>
+			</section>
+			<section>
+				<h2>Cargo / Crates.io</h2>
+			</section>
+			<section>
+				<h2>Thank you for your attention!</h2>
+				<!-- TODO Add link to GitHub for sources and slides -->
+			</section>
+		</div>
+	</div>
+
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			slideNumber: "c/t",
+			hash: true,
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true }
+			]
+		});
+	</script>
+
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript">
+		// 3. On Reveal.js ready event, copy header/footer <div> into each `.slide-background` <div>
+		var header = $('#header').html();
+		if (window.location.search.match(/print-pdf/gi)) {
+			Reveal.addEventListener('ready', function (event) {
+				$('.slide-background').append(header);
+			});
+		}
+		else {
+			$('div.reveal').append(header);
+		}
+	</script>
+</body>
+
+</html>
