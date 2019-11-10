@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="css/reveal.css">
 	<link rel="stylesheet" href="css/theme/black.css">
 
+	<link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/monokai.css">
 
@@ -76,7 +78,7 @@
 				let float: f32 = 1.0;
 				let double: f64 = -15.103E3;
 				let b: bool = true;
-				let c: char = "🦀"; // Unicode Scalar Value
+				let c: char = '🦀'; // Unicode Scalar Value
 				let i = 15; // type is inferred
 				// these are all immutable
 
@@ -90,7 +92,7 @@
 			<section>
 				<section>
 					<h2>Flow control</h2>
-					<p>Everything returns a value</p>
+					<p>Everything returns a value <small>(but can be Unit type)</small></p>
 					<p>
 						<code>if</code>, &nbsp;
 						<code>loop</code>, &nbsp;
@@ -130,66 +132,117 @@
 				</section>
 				<section>
 					<h3>while</h3>
-					<!-- TODO Write about while -->
+					<pre><code class="rust" data-trim data-line-numbers>
+					let mut counter = 1;
+					let while_ret = while counter < 15 {
+					  counter += 1;
+					};
+					assert_eq!(counter, 15);
+					assert_eq!(while_ret, ());
+					</code></pre>
 				</section>
 				<section>
 					<h3>for</h3>
-					<!-- TODO Write about for -->
+					<pre><code class="rust" data-trim data-line-numbers>
+					let range = (1..101);
+					for elem in range {
+					  print!("{} ", elem);
+					}
+					</code></pre>
 				</section>
 			</section>
 			<section>
-				<h2>Ownership / Borrows</h2>
-				<table>
-					<thead>
-						<tr>
-							<th>Type</th>
-							<th>Description</th>
-							<th>Take Ownership?</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>self</td>
-							<td>Whole Value</td>
-							<td>Yes</td>
-						</tr>
-						<tr>
-							<td>6self</td>
-							<td>Borrow</td>
-							<td>No</td>
-						</tr>
-						<tr>
-							<td>&mut self</td>
-							<td>Mutable Borrow</td>
-							<td>No</td>
-						</tr>
-					</tbody>
-				</table>
-				<!-- TODO Short summary of borrows (maybe output of compiler) -->
+				<section>
+					<h2>Ownership / Borrows</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Type</th>
+								<th>Description</th>
+								<th>Take Ownership?</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>self</td>
+								<td>Whole Value</td>
+								<td>Yes</td>
+							</tr>
+							<tr>
+								<td>6self</td>
+								<td>Borrow</td>
+								<td>No</td>
+							</tr>
+							<tr>
+								<td>&mut self</td>
+								<td>Mutable Borrow</td>
+								<td>No</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+				<section>
+					<header>Example</header>
+					<pre><code class="rust" data-trim data-line-numbers>
+				let mut s = String::from("hello");
+
+				let r1 = &mut s;
+				let r2 = &mut s;
+				
+				println!("{}, {}", r1, r2);
+				</code></pre>
+					<pre><code class="plaintext" data-trim>
+error[E0499]: cannot borrow `s` as mutable more than once at a time
+--> src\main.rs:53:14
+   |
+52 |     let r1 = &mut s;
+   |              ------ first mutable borrow occurs here
+53 |     let r2 = &mut s;
+   |              ^^^^^^ second mutable borrow occurs here
+54 | 
+55 |     println!("{}, {}", r1, r2);
+   |                        -- first borrow later used here
+				</code></pre>
+				</section>
 			</section>
 			<section>
 				<section>
 					<h2>Types</h2>
 					<p>Arrays, Tuples, Enum and Structs</p>
-					<p>Slices</p>
+					<p>And Slices</p>
 				</section>
 				<section>
-					<h3>Tuples and Array</h3>
-					<!-- TODO Describe tuples and arrays -->
+					<h3>Tuples, Array and Slices</h3>
+					<pre><code class="rust" data-trim data-line-numbers>
+					let tuple = (1, true, "Test");
+					let array = [1, 2, 3, 4];
+					let slice = &array[0..2];
+				
+					assert_eq!(tuple.1, true);
+					assert_eq!(array[1], 2);
+					assert_eq!(array.len(), 4);
+					assert_eq!(slice.len(), 2);
+					</code></pre>
 				</section>
 				<section>
 					<h3>Enum</h3>
 					<pre><code class="rust" data-trim data-line-numbers>
 					enum Message {
 					  Skipped,
-					  Ok(u32),
-					  Error { code: u32, msg: String },
+					  Ok(u32), // tuple
+					  Error { code: u32, msg: String }, // struct
 					}
 					</code></pre>
 				</section>
 				<section>
 					<h3>Struct</h3>
-					<!-- TODO Describe struct -->
+					<pre><code class="rust" data-trim data-line-numbers>
+					struct MessageQueue {
+					  name: String,
+					  messages: Vec&lt;Message&gt;,
+					  history: Vec&lt;Message&gt;
+					}
+					</code></pre>
 				</section>
 				<section>
 					<h3>Methods</h3>
@@ -208,10 +261,23 @@ impl Message {
 			</section>
 			<section>
 				<h2>Cargo / Crates.io</h2>
+				<p>Used for project creation / building / testing and running</p>
+				<p>Package management integrated (<a href="https://crates.io/">crates.io</a>)</p>
+				<pre><code class="plaintext" data-trim data-line-numbers>
+				cargo new rust-test // creating project
+				cargo build // debug build
+				cargo run
+				cargo test
+				</code></pre>
 			</section>
 			<section>
 				<h2>Thank you for your attention!</h2>
-				<!-- TODO Add link to GitHub for sources and slides -->
+				<p>
+					<i class="fab fa-github-square"></i>
+					&nbsp;
+					<a
+						href="https://github.com/highstreeto/rust-intro-presentation">highstreeto/rust-intro-presentation</a>
+				</p>
 			</section>
 		</div>
 	</div>
