@@ -24,7 +24,7 @@ git checkout gh-pages
 Write-Output "Done!"
 
 Write-Output "Expanding build artifact ..."
-Expand-Archive -Path rust-intro.zip -DestinationPath .
+Expand-Archive -Force -Path rust-intro.zip -DestinationPath .
 Remove-Item rust-intro.zip
 Write-Output "Done!"
 
