@@ -116,6 +116,7 @@ module.exports = grunt => {
 			bundle: {
 				src: [
 					'index.html',
+					'fontawesome-free/**',
 					'css/**',
 					'js/**',
 					'lib/**',
