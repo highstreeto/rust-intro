@@ -50,6 +50,30 @@
 		.footer-text {
 			font-size: 0.5em;
 		}
+
+		.header-image {
+			vertical-align: middle;
+			border: unset !important;
+			margin: 0px 0px 10px 0px !important;
+			background: unset !important;
+			box-shadow: unset !important;
+		}
+
+		figure.item {
+			/* To correctly align image, regardless of content height: */
+			vertical-align: top;
+			display: inline-block;
+			/* To horizontally center images and caption */
+			text-align: center;
+			/* The width of the container also implies margin around the images. */
+			width: 120px;
+		}
+
+		.caption {
+			/* Make the caption a block so it occupies its own line. */
+			display: block;
+			font-size: 0.1em;
+		}
 	</style>
 </head>
 
@@ -65,7 +89,13 @@
 	<div class="reveal">
 		<div class="slides">
 			<section>
-				<h1>Rust</h1>
+				<h1>
+					<figure class="item">
+						<img class="header-image" src="img/rust-logo-512x512.png" />
+						<figcaption class="caption">© Mozilla</figcaption>
+					</figure>
+					Rust
+				</h1>
 				<p>A safer way to program</p>
 			</section>
 			<section>
@@ -182,7 +212,7 @@
 					</table>
 				</section>
 				<section>
-					<header>Example</header>
+					<header>Conflicting borrows</header>
 					<pre><code class="rust" data-trim data-line-numbers>
 				let mut s = String::from("hello");
 
@@ -275,14 +305,12 @@ impl Message {
 				<p>
 					<i class="fas fa-at"></i>
 					&nbsp;
-					<a
-						href="https://www.hochstrasser.dev/rust-intro/">https://www.hochstrasser.dev/rust-intro</a>
+					<a href="https://www.hochstrasser.dev/rust-intro/">https://www.hochstrasser.dev/rust-intro</a>
 				</p>
 				<p>
 					<i class="fab fa-github-square"></i>
 					&nbsp;
-					<a
-						href="https://github.com/highstreeto/rust-intro">highstreeto/rust-intro</a>
+					<a href="https://github.com/highstreeto/rust-intro">highstreeto/rust-intro</a>
 				</p>
 			</section>
 		</div>
