@@ -1,6 +1,9 @@
-name: deploy
+name: gh-pages
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -25,10 +28,9 @@ jobs:
         unzip slides/rust-intro.zip -d public
     - name: Deploy to GitHub Pages
       if: success()
-      uses: crazy-max/ghaction-github-pages@v0.1.0
-      with:
-        target_branch: gh-pages
-        build_dir: public
+      uses: docker://peaceiris/gh-pages:v2.5.0
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./public
         
