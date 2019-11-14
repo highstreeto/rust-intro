@@ -20,14 +20,15 @@ jobs:
         npm run package
       env:
         CI: true
-    - name: Unzip to _publish
+    - name: Unzip to public
       run: |
-        unzip slides/rust-intro.zip -d _publish
+        unzip slides/rust-intro.zip -d public
     - name: Deploy to GitHub Pages
+      if: success()
       uses: crazy-max/ghaction-github-pages@v0.1.0
       with:
         target_branch: gh-pages
-        build_dir: _public
+        build_dir: public
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
